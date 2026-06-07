@@ -156,7 +156,7 @@ Suggests allocation strategies consistent with the user's Governance Charter —
 
 ```json
 {
-  "@context": "https://timeprotocol.org/governance-charter/v1",
+  "@context": "https://timeprotocol.earth/governance-charter/v1",
   "@type": "GovernanceCharter",
   "subject": "did:world:{nullifier}",
   "principles": {

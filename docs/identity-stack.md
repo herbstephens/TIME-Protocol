@@ -43,7 +43,7 @@ The Identity Bridge normalizes heterogeneous identity proofs into a standardized
 
 ```json
 {
-  "@context": "https://timeprotocol.org/identity/v1",
+  "@context": "https://timeprotocol.earth/identity/v1",
   "@type": "IdentityClaim",
   "subject_id": "did:world:{nullifier}",
   "verification_methods": [
