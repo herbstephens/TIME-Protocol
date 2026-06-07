@@ -1,76 +1,62 @@
-# TIME Protocol Project Map
+# TIME Protocol — Project Map
 
-TIME Protocol is the parent economic protocol. The surrounding repositories become reference applications, implementation modules, and jurisdictional pilots.
+TIME Protocol is the parent economic protocol. All surrounding repositories are reference applications, implementation modules, and jurisdictional pilots built on top of it.
 
-## Parent Protocol
+---
 
-**TIME Protocol**
+## The Protocol Stack
 
-A human-time stablecoin protocol backed by verified work, proof of humanity, proof of time, and real payments.
+TIME Protocol is a stack, not a single app:
 
-Core unit:
+| Layer | What it does |
+|---|---|
+| **1. Identity** | One verified human, one time account. Tiered Humanity Stack (Tier 0 peer vouching → Tier 3 World ID biometric). |
+| **2. Economy** | TIME token, work contracts, payment-triggered minting, Daily UBI, Retroactive Birthright, Liquidity Ladder. |
+| **3. Records** | Soulbound Work NFTs, VolunteerPROOF NFTs, VowNFTs — immutable reputation layer. |
+| **4. Governance** | Governance Agent: status-quo allocation, quadratic voting, jurisdiction mesh, Local Multiplier. |
+| **5. Partnership** | HumanBond: two-person time commitment, 50/50 income split, Partnership Registry API. |
+| **6. Civic** | VolunteerPROOF: civic contribution credentialing, political campaign records, organization bonding. |
+| **7. Utility** | Utility Concierge: community utility governance, anti-authoritarian infrastructure, five persistence mechanisms. |
+| **8. Jurisdictions** | Network States, pop-up cities, municipalities, DAOs, parallel institutions — all subscribable governance grids. |
 
-> 1 TIME = 1 verified hour of human productive capacity
+---
 
-Core issuance rule:
+## Core Unit and Issuance Rule
 
-> Payment for work is the mint event.
+```
+1 TIME = 1 verified hour of human productive capacity
+
+Payment for work is the mint event.
+Hard cap: 24 TIME per verified human per day.
+```
+
+---
 
 ## Reference Applications
 
-| Project | Role in TIME Protocol |
+| Project | Repo | Status | Role in TIME Protocol |
+|---|---|---|---|
+| **HumanBond** | [herbstephens/Human-Bond](https://github.com/herbstephens/Human-Bond) | ✅ Live on World Chain + World App | Two-person partnership protocol; 50/50 TIME income split; Partnership Registry API for dating platforms and financial services |
+| **VolunteerPROOF** | This repo (`/docs/volunteerproof.md`) | 🔨 In development | Civic contribution credentialing; political campaign volunteer records; soulbound NFTs with early-supporter timing signal |
+| **Governance Agent** | This repo (`/docs/governance-agent.md`) | 🔨 In development (Soroban) | Quadratic TIME allocation; jurisdictional map; status-quo signal; Local Multiplier; AI-assisted governance; SCF Build Award Q3 2026 |
+| **Utility Concierge** | This repo (`/docs/utility-concierge.md`) | 📋 Specified | Community utility governance; anti-authoritarian infrastructure; Oslo Freedom Forum 2027 debut |
+
+---
+
+## Live Deployments
+
+**World Chain Mainnet — HumanBond V2**
+
+| Contract | Address |
 |---|---|
-| Governance Agent | Political preference, jurisdiction awareness, status-quo allocation, TIME-staked voting |
-| HumanBond | Two-person DAO; relationship longevity yield; World ID proof of human pair-bonding |
-| marriagePROOF | Earlier ETHGlobal reference implementation for on-chain relationship contracts |
-| Logos TIME Module | Sovereignty / parallel society module: Waku work agreements, payment-triggered minting, Work NFTs |
-| Parallel Society | Operating system narrative: identity, awareness, economy, governance, coordination |
-| The Network State | Network-state economic architecture: census, treasury, Work NFTs, shadow democracy |
-| Liberland | Jurisdictional pilot: citizenship, clearinghouse, governance, tax routing, human/corporate distinction |
+| HumanBond | `0x6494daa4e693F748Eb0a16041ECfCEd51392bB13` |
+| TIME Token | `0x261f6d89491cbadff7813303363a514f4b226a82` |
+| VowNFT | `0xa1650cc531c2780fb8c006f4b8d314018f7f9ac9` |
+| MilestoneNFT | `0x0a2759241d0cb610e3e61db351813ddf8a52f14c` |
 
-## Recommended Repository Structure
+**Soroban (Stellar)** — Governance Agent contracts in development; target deployment Q4 2026 pending SCF Build Award.
 
-```text
-TIME-Protocol/
-├── README.md
-├── PROJECT-MAP.md
-├── docs/
-│   ├── stablecoin-thesis.md
-│   ├── protocol-overview.md
-│   ├── comparison-usd-stablecoins.md
-│   ├── monetary-principles.md
-│   ├── tokenomics-spec.md
-│   ├── birthright-and-work-minting.md
-│   ├── governance-agent.md
-│   ├── shadow-democracy.md
-│   ├── local-allocation.md
-│   ├── reference-applications.md
-│   ├── parallel-society-os.md
-│   ├── network-state-integration.md
-│   ├── logos-integration.md
-│   ├── humanbond-integration.md
-│   ├── jurisdictional-pilots.md
-│   ├── implementation-roadmap.md
-│   └── source-map.md
-├── contracts/
-│   └── README.md
-└── assets/
-    └── .gitkeep
-```
-
-## Strategic Positioning
-
-TIME Protocol should not be described as a single app.
-
-It is a stack:
-
-1. **Identity** — one verified human, one time account.
-2. **Economy** — TIME token, work contracts, payment-triggered minting.
-3. **Records** — soulbound Work NFTs and application-specific NFTs.
-4. **Governance** — status-quo allocation, movement of TIME as preference signal, quadratic voting.
-5. **Coordination** — local allocation, jurisdictional discovery, Waku/Logos messaging.
-6. **Jurisdictions** — network states, micronations, local governments, DAOs, and parallel institutions.
-7. **Reference Apps** — HumanBond, Governance Agent, volunteer proofs, work marketplaces, citizenship systems.
+---
 
 ## Canonical Narrative
 
@@ -78,10 +64,63 @@ USD stablecoins tokenize dollars.
 
 TIME tokenizes verified human hours.
 
-Governance Agent turns those hours into political preference.
+HumanBond turns shared time into partnership infrastructure and income recognition.
 
-HumanBond turns shared time into relationship infrastructure.
+VolunteerPROOF turns civic hours into portable, verifiable reputation.
 
-Logos and Waku turn time into parallel-society coordination.
+Governance Agent turns TIME into political preference — making invisible institutional power visible.
 
-Network states and jurisdictions turn TIME into census, treasury, citizenship, tax, and legitimacy infrastructure.
+Utility Concierge turns community governance into survival infrastructure that persists regardless of political change.
+
+Network States and jurisdictions turn TIME into census, treasury, citizenship, and legitimacy infrastructure.
+
+---
+
+## Jurisdiction Pilots
+
+| Pilot | Timeline | Scope |
+|---|---|---|
+| **Valley of the Commons** (Austrian Alps) | Governance Week 2026 | Pop-up city module; Local Multiplier; tiered ID onboarding; Governance Agent testnet |
+| **Oslo Freedom Forum** | 2027 | Utility Concierge as anti-authoritarian infrastructure; HRF alignment |
+| **Network State** (Balaji framework) | 2027 | Portable governance persona; TIME as sovereign labor standard |
+
+---
+
+## Contract Specification Roadmap
+
+### EVM (World Chain — Live)
+- `TIME Token (ERC-20)` ✅
+- `HumanBond` ✅
+- `VowNFT (ERC-721, soulbound)` ✅
+- `MilestoneNFT (ERC-721, soulbound)` ✅
+
+### Soroban (Stellar — In Development)
+- `GenesisRegistry` — retroactive birthright calculation
+- `BirthrightClock` — 1 TIME/day UBI stream
+- `LiquidityLadder` — 1:1 Age Grant unlock
+- `AllocationManager` — quadratic governance allocation
+- `GovernanceRegistry` — Governance Objects by jurisdiction
+- `JurisdictionRegistry` — multi-jurisdiction subscription mesh
+- `OrganizationRegistry` — bonded organizations + slashing
+- `FraudInvestigation` — quadratic fraud governance
+- `GovernanceAgent` — read-only query aggregator
+- `ReputationRegistry` — five-dimension reputation score
+- `JurisdictionalAccounting` — Local Multiplier calculation
+
+All Soroban contracts to be published under MIT license upon deployment.
+
+---
+
+## Strategic Positioning
+
+TIME Protocol is not competing with Bitcoin. It complements it.
+
+**Bitcoin:** proof-of-work for machines. Converts energy into mathematical scarcity. Store of value and censorship-resistant settlement.
+
+**TIME:** proof-of-work for humans. Converts verified contribution into economic recognition. Labor recognition, governance, reputation, and community coordination layer.
+
+The world needs both.
+
+---
+
+*democracy.earth · June 2026*
