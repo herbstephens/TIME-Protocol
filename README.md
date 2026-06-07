@@ -1,146 +1,166 @@
-# Contracts
+# TIME Protocol
 
-## Deployed — World Chain Mainnet
+**The human-anchoring layer for an AI-dominant economy.**
 
-See [docs/deployments.md](../docs/deployments.md) for verified addresses.
+> *1 TIME = 1 verified hour of human existence*
+> *The dollar is a political unit. The hour is a biological unit.*
+> *TIME Protocol is the first monetary protocol built on the latter.*
 
-All HumanBond V2 contracts authored by [@leticarolina](https://github.com/leticarolina).
-Source: [herbstephens/Human-Bond/contracts](https://github.com/herbstephens/Human-Bond/tree/main/contracts)
+[![World Chain](https://img.shields.io/badge/World%20Chain-Mainnet-1A1D3A?style=flat-square)](https://worldscan.org)
+[![HumanBond](https://img.shields.io/badge/HumanBond-Live%20in%20World%20App-6B4FBB?style=flat-square)](https://github.com/herbstephens/Human-Bond)
+[![SCF](https://img.shields.io/badge/SCF%20Build%20Award-Q3%202026-1B4F8B?style=flat-square)](./docs/scf-build-award.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-gray?style=flat-square)](./LICENSE)
 
 ---
 
-## In Specification — Soroban (Stellar)
+## What Is TIME Protocol?
 
-Target: Q4 2026 · SCF Build Award Q3 2026 · All MIT licensed on deployment
+TIME Protocol is a monetary primitive built on biological scarcity. Every verified human on earth receives exactly 24 TIME per day — no more, no less. That ceiling is not a governance parameter. It is a physical law.
 
-### Core Protocol
+TIME is minted only when real work is contracted, verified, and paid for — or streamed as a daily birthright to every verified human. It is the first **labor-backed stable asset**: collateralized by verified human productivity and real payments, denominated in the one resource every human holds in precisely equal daily supply.
 
-**`GenesisRegistry.sol`**
-Calculates and mints retroactive birthright TIME (Age × 365) at first verification. Holds as governance-bound until unlocked via LiquidityLadder.
-```
-calculateAgeGrant(worldIdNullifier) → uint256
-claimGrant(worldIdNullifier, identityProof)
-getLockedBalance(worldIdNullifier) → uint256
-```
+**Bitcoin converts energy into scarcity. TIME converts verified human contribution into money.**
 
-**`BirthrightClock.sol`**
-Streams 1 TIME/day to all verified humans continuously. Separate accounting from work TIME and Age Grant.
-```
-streamDaily(worldIdNullifier)
-claimAccrued(worldIdNullifier) → uint256
-getAccruedBalance(worldIdNullifier) → uint256
-```
+---
 
-**`LiquidityLadder.sol`**
-Releases governance-bound Age Grant 1:1 as work-backed TIME is earned.
-```
-updateLiquidity(address user, uint256 newlyEarned)
-getTotalUnlocked(address user) → uint256
-getRemainingLocked(address user) → uint256
-```
+## Core Thesis
 
-**`UHTC_Calendar.sol`**
-Enforces 24-hour daily cap; prevents double-booking; manages time slot records.
-```
-bookSlot(address seller, uint256 startTime, uint256 endTime)
-checkAvailability(address seller, uint256 startTime, uint256 endTime) → bool
-getDailyUsed(address seller, uint256 date) → uint256
-```
+**USD stablecoins are stable against a currency. TIME is stable against civilization's primary scarce asset: human life-hours.**
 
-### Governance
+Dollar-pegged stablecoins stabilize one exchange rate: token-to-dollar. They do not stabilize purchasing power, labor value, local-currency value, or human economic opportunity. The honest name for them is **dollarcoins** — tokenized offshore dollar liquidity.
 
-**`GovernanceRegistry.sol`**
-Registry of Governance Objects (laws, budgets, officials, public goods) within each jurisdiction.
-```
-proposeObject(bytes32 jurisdictionId, ObjectType objType, bytes calldata metadata)
-ratifyObject(uint256 proposalId)
-getObjectsByJurisdiction(bytes32 jurisdictionId) → GovernanceObject[]
-flagObject(uint256 objectId, string calldata reason)
-```
+TIME Protocol offers a different reference unit: the verified human hour. Its scarcity is biological, not mathematical, geological, or political:
 
-**`AllocationManager.sol`**
-Quadratic TIME allocation engine. Tracks user allocations, calculates √(tokens) voting power.
+| Scarcity type | Example | Source |
+|---|---|---|
+| Mathematical | Bitcoin (21M cap) | Algorithm |
+| Geological | Gold | Earth deposits |
+| Political | Fiat currency | Central bank |
+| **Biological** | **TIME (24h/day/human)** | **Physical law** |
+
+No central bank can print more hours. No government can extend the length of a day. No amount of capital can purchase more human time.
+
+---
+
+## The Four Issuance Primitives
+
+| Primitive | Mechanism | Daily limit |
+|---|---|---|
+| **Retroactive Birthright** | Age × 365 TIME at first verification, governance-bound | One-time genesis grant |
+| **Daily UBI** | 1 TIME/day streamed continuously to all verified humans | 1 TIME |
+| **Work TIME** | Minted only when real payment is received for verified work | Up to 23 TIME |
+| **Volunteer TIME** | Minted when a bonded organization sponsors hours | Within 24 TIME total |
+
+**Hard cap: 24 TIME per verified human per day — enforced on-chain, non-overridable by any governance action.**
+
+### The Retroactive Birthright
+
 ```
-allocate(uint256 objectId, uint256 amount)
-getVotingPower(uint256 objectId, address user) → uint256  // returns √(amount)
-getStatusQuo(uint256 objectId) → uint256
-unlockAgeGrant(address user, uint256 earnedAmount)
+retroactive_birthright_TIME = age_in_years × 365
+
+e.g. 40 years × 365 = 14,600 TIME at first verification
 ```
 
-**`JurisdictionRegistry.sol`**
-Multi-jurisdictional subscription system. Users subscribe to multiple governance grids.
-```
-subscribe(bytes32 jurisdictionId)
-unsubscribe(bytes32 jurisdictionId)
-getUserJurisdictions(address user) → bytes32[]
-meshJurisdictions(bytes32[] calldata jurisdictionIds) → bytes32 meshId
-```
+Every verified human enters the protocol with capital proportional to their lived experience. The grant is governance-bound at verification and unlocks 1:1 as work-backed TIME is earned (the **Liquidity Ladder**). Anti-speculation by design.
 
-**`GovernanceAgent.sol`** (read-only query aggregator)
-Composes data from registry, allocation, and jurisdiction contracts into jurisdiction-specific views.
-```
-getJurisdictionalView(address user) → JurisdictionalView
-getStatusQuoSignal(bytes32 jurisdictionId, uint256 objectId) → uint256
-getUserDelta(address user, uint256 objectId) → int256
-```
+**The protocol does not create human time. It recognizes it.**
 
-### Civic
+---
 
-**`OrganizationRegistry.sol`**
-Registry for bonded organizations with verification privileges. Slashing for fraudulent verification.
-```
-registerOrganization(string calldata name, OrgType orgType, bytes32 jurisdictionId) external payable
-slashOrganization(address org, string calldata reason) external onlyGovernance
-getOrgStatus(address org) → OrgStatus
-verifyContribution(address volunteer, uint256 hours, RoleType role, bytes32 electionCycle)
-```
+## Live Deployments
 
-**`FraudInvestigation.sol`**
-Quadratic-weighted community governance over fraud allegations.
-```
-openInvestigation(address targetOrg, string calldata evidence)
-allocateSignal(bytes32 investigationId, uint256 tokens, bool support)
-// voting power = √(tokens)
-resolve(bytes32 investigationId) external onlyGovernance
-unlockTokens(bytes32 investigationId)
-// Truth Dividend: slashed bond distributed to successful investigators
-```
+**HumanBond V2 — World Chain Mainnet**
 
-### Reputation
+| Contract | Address |
+|---|---|
+| HumanBond | `0x6494daa4e693F748Eb0a16041ECfCEd51392bB13` |
+| TIME Token (ERC-20) | `0x261f6d89491cbadff7813303363a514f4b226a82` |
+| VowNFT (ERC-721) | `0xa1650cc531c2780fb8c006f4b8d314018f7f9ac9` |
+| MilestoneNFT (ERC-721) | `0x0a2759241d0cb610e3e61db351813ddf8a52f14c` |
 
-**`ReputationRegistry.sol`**
-Aggregates on-chain activity into five composable reputation dimensions.
+**HumanBond Mini App** — live in World App store · search `HumanBond`
+
+**Governance Agent** — in development on Soroban (Stellar) · SCF Build Award Q3 2026
+
+---
+
+## Reference Applications
+
+| App | Status | Description |
+|---|---|---|
+| [**HumanBond**](https://github.com/herbstephens/Human-Bond) | ✅ Live | Two-person partnership protocol. 50/50 TIME income split. Partnership Registry API for dating platforms. |
+| **VolunteerPROOF** | 🔨 In development | Civic contribution credentialing. Political campaign volunteer records. Soulbound NFTs. |
+| **Governance Agent** | 🔨 In development (Soroban) | Quadratic allocation, jurisdictional map, Local Multiplier, AI-assisted governance. |
+| **Utility Concierge** | 📋 Specified | Community utility governance. Anti-authoritarian infrastructure. Oslo Freedom Forum 2027. |
+
+---
+
+## Repository Structure
+
 ```
-getWorkScore(bytes32 worldIdNullifier) → (uint256 score, uint256 lastUpdated, uint256 totalHours)
-getCivicScore(bytes32 worldIdNullifier) → (uint256 score, CivicBreakdown memory)
-getGovernanceScore(bytes32 worldIdNullifier) → (uint256 score, uint256 frequency, bytes32[] memory jurisdictions)
-getPartnershipScore(bytes32 worldIdNullifier) → (uint256 score, PartnershipStatus, uint256 durationDays)
-getIdentityTier(bytes32 worldIdNullifier) → (uint8 tier, uint256 lastVerified)
-getFullProfile(bytes32 worldIdNullifier, bytes calldata disclosureProof) → ReputationProfile
-verifyThreshold(bytes32 worldIdNullifier, Dimension dimension, uint256 minimumScore) → bool
-```
-
-### Economic Health
-
-**`JurisdictionalAccounting.sol`**
-Tracks TIME flow within and across jurisdictions for Local Multiplier calculation.
-```
-getLocalMultiplier(bytes32 jurisdictionId) → uint256
-// multiplier = localTIME / externalTIME
-// > 2.0 = strong local economy
-// < 1.0 = net extraction
-
-recordFlow(address from, address to, uint256 amount, bytes32 jurisdictionId)
-getFlowHistory(bytes32 jurisdictionId, uint256 months) → FlowData[]
+TIME-Protocol/
+├── README.md                              ← You are here
+├── PROJECT-MAP.md                         ← Protocol stack and reference app map
+├── WHITEPAPER.md                          ← Full technical and economic whitepaper
+├── docs/
+│   ├── tokenomics.md                      ← Issuance, scarcity, monetary design
+│   ├── identity-stack.md                  ← Tiered Humanity Stack (Tier 0–3)
+│   ├── reputation-score.md                ← Five-dimension reputation architecture
+│   ├── governance-agent.md                ← Governance Agent specification
+│   ├── utility-concierge.md               ← Utility Concierge + persistence mechanisms
+│   ├── humanbond.md                       ← HumanBond + Partnership Registry
+│   ├── volunteerproof.md                  ← VolunteerPROOF + political campaigns
+│   ├── liquidity-ladder.md                ← Age Grant unlock mechanics
+│   ├── local-multiplier.md                ← Community economic health metric
+│   ├── stablecoin-thesis.md               ← Dollar stablecoin critique
+│   ├── monetary-principles.md             ← Core monetary design principles
+│   ├── canon.md                           ← Book trilogy intellectual foundation
+│   ├── deployments.md                     ← Live contract addresses
+│   └── scf-build-award.md                 ← SCF Build Award application summary
+├── contracts/
+│   └── README.md                          ← Contract specifications
+└── LICENSE
 ```
 
 ---
 
-## Open Source Commitment
+## Upcoming Milestones
 
-All Soroban contracts will be published under MIT license on GitHub upon deployment. The TypeScript SDK and REST API wrapping the GovernanceAgent query layer will be published as open standards for any developer to integrate.
+| Event | Date | Deliverable |
+|---|---|---|
+| **ETHGlobal Lisbon** | July 24–26, 2026 | HumanBond live demo; Age Grant UI; Governance Agent UI; hackathon prizes |
+| **SCF Build Award** | Q3 2026 | Governance Agent on Soroban; $150K award |
+| **Valley of the Commons** | Governance Week 2026 | Pop-up city pilot; Local Multiplier live; tiered ID |
+| **Oslo Freedom Forum** | 2027 | Utility Concierge debut as anti-authoritarian infrastructure |
 
 ---
 
-*Part of [TIME Protocol](https://github.com/herbstephens/TIME-Protocol)*
-*democracy.earth · June 2026*
+## The Book Trilogy
+
+TIME Protocol is the technical implementation of a three-book intellectual project by Herb Stephens:
+
+| Book | Diagnosis | Protocol response |
+|---|---|---|
+| [**The Lie Factory**](https://www.amazon.com/Lie-Factory-Orgasms-Childhood-Intimacy/dp/B0GM81PB3T/) *(live on Amazon)* | Information weaponized to manufacture consent | Governance Agent as anti-lie infrastructure |
+| **The Lie of Investing** *(manuscript complete)* | Capital extraction masquerading as wealth creation | Work-backed TIME, Local Multiplier, Age Grant |
+| **The Great Reset** *(manuscript complete)* | Civilizational transition is necessary and possible | TIME Protocol as coordination layer; 2034 Schelling point |
+
+---
+
+## Team
+
+**Herb Stephens** — Co-Founder, Democracy Earth Foundation (with Santiago Siri). Creator of Democracy OS and Proof of Humanity. Author of The Lie Factory. herb@democracy.earth
+
+**Franco** — Frontend / MiniKit. Lead developer, HumanBond Mini App.
+
+**Leticia** — Smart contracts. HumanBond V2 deployed and verified on World Chain Mainnet.
+
+---
+
+## License
+
+MIT — all code open source. All Soroban contracts published under MIT upon deployment.
+
+---
+
+*democracy.earth · github.com/herbstephens/TIME-Protocol · June 2026*
